@@ -17,6 +17,9 @@ function App() {
         >
           Learn React
         </a>
+        <h1>
+          俺たちの伝説が今始まる...!
+        </h1>
       </header>
     </div>
   );
