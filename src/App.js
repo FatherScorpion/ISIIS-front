@@ -18,7 +18,7 @@ function App() {
           Learn React
         </a>
         <h1>
-          俺たちの伝説が今始まる...!
+          俺たちの伝説が今始まる...!かもしれない
         </h1>
       </header>
     </div>
