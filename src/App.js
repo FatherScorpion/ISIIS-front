@@ -1,110 +1,120 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom';
 import Avatar from '@mui/material/Avatar';
+import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Fab from '@mui/material/Fab';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        石川幸三郎
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useParams,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
+export default function Top() {
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="l">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            スライム財閥超機密データベース
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <NavigationTab />
       </Container>
     </ThemeProvider>
+  );
+}
+
+function NavigationTab(){
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return(
+    <Box sx={{bgcolor: 'background.paper',width: '100%'}}>
+      <AppBar position="static">
+        <Toolbar>
+          <h1>ISIIs</h1>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            variant="fullWidth"
+            indicatorColor="secondary"
+            textColor="inherit"
+          >
+            <Tab label="申請前"/>
+            <Tab label="申請済み"/>
+            <Tab label="発注済み"/>
+            <Tab label="納品済み"/>
+            <Tab label="受け取り済み"/>
+          </Tabs>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'right'}}>
+            25000/30000円
+          </Typography>
+          <Box textAlign="center" margin="0px 100px 0px 100px">
+            Team1
+          </Box>
+          <Fab size="small">
+            <SettingsIcon />
+          </Fab>
+        </Toolbar>
+      </AppBar>
+      <Box>
+        <TabPanel value={value} index={0}>
+          申請前
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          申請済み
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          発注済み
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          納品済み
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          受け取り済み
+        </TabPanel>
+      </Box>
+    </Box>
+  );
+}
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
   );
 }
