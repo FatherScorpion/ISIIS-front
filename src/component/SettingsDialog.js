@@ -17,7 +17,7 @@ function SettingsDialog(props) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>設定</DialogTitle>
-      <Row style={styles.contaier}>
+      <Row>
         <Col>
           <TextField
             id="outlined-name"
@@ -34,11 +34,5 @@ function SettingsDialog(props) {
     </Dialog>
   );
 }
-
-const styles = StyleSheet.create({
-  contaier: {
-    justifyContent: 'end'
-  }
-})
 
 export default SettingsDialog
