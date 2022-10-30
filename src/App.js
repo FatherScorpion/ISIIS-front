@@ -9,6 +9,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Fab from '@mui/material/Fab';
+import List from '@mui/material/List';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -17,15 +18,16 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import SettingsDialog from './component/SettingsDialog.js'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
   useParams,
-  useHistory,
   useLocation,
 } from 'react-router-dom';
 
@@ -44,8 +46,15 @@ export default function Top() {
 
 function NavigationTab(){
   const [value, setValue] = React.useState(0);
+  const [id, setId] = React.useState(0);
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSettingsClose = (value) => {
+    setSettingsOpen(false);
+    setId(value);
   };
 
   return(
@@ -73,12 +82,17 @@ function NavigationTab(){
           <Box textAlign="center" margin="0px 100px 0px 100px">
             Team1
           </Box>
-          <Fab size="small">
+          <Fab onClick={()=>setSettingsOpen(true)} size="small">
             <SettingsIcon />
           </Fab>
         </Toolbar>
       </AppBar>
       <Box>
+        <SettingsDialog
+          selectedValue={id}
+          open={settingsOpen}
+          onClose={handleSettingsClose}
+        />
         <TabPanel value={value} index={0}>
           申請前
         </TabPanel>
